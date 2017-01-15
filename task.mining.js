@@ -19,12 +19,12 @@ var mod = {
         // check flag
         let flagMem = Memory.flags[flagName];
         if( flagMem && flagMem.task === 'mining' && flagMem.roomName ){
-            // if there is still a mining flag in that room ignore. 
+            // if there is still a mining flag in that room ignore.
             let flags = FlagDir.filter(FLAG_COLOR.claim.mining, new RoomPosition(25,25,flagMem.roomName), true);
-            if( flags && flags.length > 0 ) 
+            if( flags && flags.length > 0 )
                 return;
             else {
-                // no more mining in that room. 
+                // no more mining in that room.
                 // clear memory
                 Task.clearMemory('mining', flagMem.roomName);
             }
@@ -76,6 +76,9 @@ var mod = {
         let workerCount = memory.queued.remoteWorker.length + _.filter(Game.creeps, function(c){return c.data && c.data.creepType=='remoteWorker' && c.data.destiny.room==roomName;}).length;
         // TODO: calculate creeps by type needed per source / mineral
 
+        if( TRACE ) trace('setup',{setupType:'mining',room:spawnRoom}, 'checking flag@', flag.pos,
+            JSON.stringify({sourceCount, haulerCount, minerCount, workerCount}));
+
         if(minerCount < sourceCount) {
             for(let i = minerCount; i < sourceCount; i++) {
                 Task.mining.spawn(flag, 'remoteMiner', Task.mining.creepBodies.miner.fixed, Task.mining.creepBodies.miner.multi );
@@ -100,8 +103,8 @@ var mod = {
         let memory = Task.memory('mining', key);
         if( !memory.hasOwnProperty('queued') ){
             memory.queued = {
-                remoteMiner:[], 
-                remoteHauler:[], 
+                remoteMiner:[],
+                remoteHauler:[],
                 remoteWorker:[]
             };
         }
@@ -121,8 +124,8 @@ var mod = {
         }
 
         return memory;
-    }, 
-    spawn: (flag, type, fixedBody, multiBody) => {  
+    },
+    spawn: (flag, type, fixedBody, multiBody) => {
         // get nearest room
         let room = Room.bestSpawnRoomFor(flag.pos.roomName);
         if( room.controller.level < Task.mining.minControllerLevel ) return;
@@ -135,7 +138,7 @@ var mod = {
             destiny: { task: "mining", type: type, flagName: flag.name, room: flag.pos.roomName }
         };
         if( creep.parts.length === 0 ) {
-            // creep has no body. 
+            // creep has no body.
             global.logSystem(flag.pos.roomName, dye(CRAYON.error, `Mining Flag tried to queue a zero parts body ${type}. Aborted.` ));
             return;
         }

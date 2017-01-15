@@ -18,6 +18,8 @@ var mod = {
         //console.log('base');
     },
     init: function(params){
+
+
         // START LOCAL REFERENCES ONLY
         // make params available globally
         _.assign(global, params);
