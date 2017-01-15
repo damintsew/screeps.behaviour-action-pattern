@@ -184,10 +184,9 @@ var mod = {
                 console.log( dye(CRAYON.system, `<a href="/a/#!/room/${roomName}">${text}</a> &gt; `) + message );
             },
             trace: function(category, entityWhere, ...message) {
-                debugger;
                 if(! DEBUG) return;
                 if(! ( Memory.debugTrace[category] === true || _(entityWhere).reduce(reduceMemoryWhere, 1) === true )) return;
-                if( Memory.debugTrace.no && _(entityWhere).reduce(reduceNoMemoryWhere, 1) === true ) return;
+                if( Memory.debugTrace.no && _(entityWhere).pairs().some(noMemoryWhere) === true ) return;
 
                 console.log(Game.time, dye(CRAYON.error, category), dye(CRAYON.birth, JSON.stringify(entityWhere)), ...message);
             },
