@@ -287,10 +287,10 @@ var mod = {
                 });
             },
             playerWhitelist: function() {
-                if( this._whitelist && this._whitelist.length === PLAYER_WHITELIST.length) {
-                    return this._whitelist;
+                if( global._whitelist && global._whitelist.length === PLAYER_WHITELIST.length) {
+                    return global._whitelist;
                 }
-                return this._whitelist = _.sortBy(PLAYER_WHITELIST);
+                return global._whitelist = _.sortBy(PLAYER_WHITELIST);
             }
         });
         // END LOCAL REFERENCES ONLY
