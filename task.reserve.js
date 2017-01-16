@@ -39,8 +39,10 @@ module.exports = {
                 (flag.room.controller && !flag.room.controller.reservation) ||
                 (flag.room.controller && flag.room.controller.reservation && flag.room.controller.reservation.ticksToEnd < 250)) && count == 1; // always let it queue one in low as well
 
-        // if creep count below requirement spawn a new creep creep 
-        if( count < 1 || lowReservation) {
+        let maxAccessibleFields = flag.room.controllerAccessibleFields; //get if there are free fields near controller
+
+        // if creep count below requirement spawn a new creep creep. Check if there are free fields
+        if( count < 1 || (lowReservation && count < maxAccessibleFields)) {
             Task.spawn(
                 lowReservation ? 'Medium' : 'Low', // queue
                 'reserve', // taskname

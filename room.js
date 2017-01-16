@@ -340,6 +340,15 @@ var mod = {
                     return this.memory.sourceAccessibleFields;
                 }
             },
+            'controllerAccessibleFields': {
+                configurable: true,
+                get: function() {
+                    if( _.isUndefined(this.memory.controllerAccessibleFields)) {
+                        this.memory.controllerAccessibleFields = this.controller.accessibleFields;
+                    }
+                    return this.memory.controllerAccessibleFields;
+                }
+            },
             'sourceEnergyAvailable': {
                 configurable: true,
                 get: function() {
