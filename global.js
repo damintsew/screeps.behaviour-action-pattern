@@ -285,6 +285,12 @@ var mod = {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                     return v.toString(16);
                 });
+            },
+            playerWhitelist: function() {
+                if( this._whitelist && this._whitelist.length === PLAYER_WHITELIST.length) {
+                    return this._whitelist;
+                }
+                return this._whitelist = _.sortBy(PLAYER_WHITELIST);
             }
         });
         // END LOCAL REFERENCES ONLY
