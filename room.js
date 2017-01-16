@@ -436,10 +436,8 @@ var mod = {
                 configurable: true,
                 get: function() {
                     if( _.isUndefined(this._hostiles) ){
-                        let notWhitelisted = (creep) => 
-                            !(PLAYER_WHITELIST.some((player) => 
-                                player.toLowerCase() == creep.owner.username.toLowerCase()
-                            ));
+                        let notWhitelisted = (creep) =>
+                            _.indexOf(playerWhitelist(), creep.owner.username) < 0;
                         this._hostiles = this.find(FIND_HOSTILE_CREEPS, { filter : notWhitelisted });
                     }
                     return this._hostiles;
@@ -743,9 +741,8 @@ var mod = {
                         } else if (this.controller) {
                             const owner = this.owner;
                             const reservation = this.reservation;
-                            this._ally = _.some(PLAYER_WHITELIST, function(player) {
-                                return player === owner || player === reservation;
-                            });
+                            this._ally = _.indexOf(playerWhitelist(), owner) >= 0
+                                || _.indexOf(playerWhitelist(), reservation) >= 0;
                         } else {
                             this._ally = false;
                         }
